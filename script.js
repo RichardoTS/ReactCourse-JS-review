@@ -145,7 +145,7 @@ function getBook(id) {
 
 // Destructuring
 
-const book = getBook(2);
+const book = getBook(1);
 book;
 // const title = book.title;
 // const author = book.author
@@ -158,6 +158,25 @@ console.log(title, author, genres);
 // const primaryGenre = genres[0]
 // const secondaryGenre = genres[1]
 
-const [primaryGenre, secondaryGenre] = genres;
+// Rest & Spread Operator Lecture
+const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
+console.log(primaryGenre, secondaryGenre, otherGenres);
 
-console.log(primaryGenre, secondaryGenre);
+const newGenres = [...genres, "epic fantasy"];
+newGenres;
+
+const updatedBook = {
+  ...book,
+  // Adding a new property
+  moviePublicationDate: "2001-12-19",
+
+  //  Overwriting an existing property
+  pages: 1210,
+};
+updatedBook;
+
+// Template Literals Lecture
+const summary = `${title}, a ${pages}-page book, was written by ${author} and published in ${
+  publicationDate.split("-")[0]
+}`;
+summary;
