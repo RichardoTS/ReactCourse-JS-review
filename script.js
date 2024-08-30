@@ -144,8 +144,8 @@ function getBook(id) {
 }
 
 // Destructuring
-
-const book = getBook(1);
+/* 
+const book = getBook(3);
 book;
 // const title = book.title;
 // const author = book.author
@@ -175,13 +175,99 @@ const updatedBook = {
 };
 updatedBook;
 
+// Arrow Functions
+// function getYear(str) {
+//   return str.split("-")[0];
+// }
+
+const getYear = (str) => str.split("-")[0];
+console.log(getYear(publicationDate));
+
 // Template Literals Lecture
-const summary = `${title}, a ${pages}-page book, was written by ${author} and published in ${
-  publicationDate.split("-")[0]
-}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie`;
+const summary = `${title}, a ${pages}-page book, was written by ${author} and published in ${getYear(
+  publicationDate
+)}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie`;
 summary;
 
 // Ternaries Operators
 const pagesRange = pages > 1000 ? "over a thousand" : "less than 1000";
 pagesRange;
 console.log(`The book has ${pagesRange} pages`);
+
+// Short-Circuiting and Logical Operators
+console.log(true && "Some string");
+console.log(false && "Some string");
+console.log(hasMovieAdaptation && "This book has a movie");
+
+// falsy: 0, "", null, undefined
+// &&
+console.log("richard" && "Some string+");
+console.log(0 && "Some string+");
+
+// ||
+console.log(true || "Some string");
+console.log(false || "Some string");
+
+console.log(book.translations.spanish);
+
+const spanishTranslation = book.translations.spanish || "NOT TRANSLATED";
+spanishTranslation;
+
+// console.log(book.reviews.librarything.reviewsCount);
+// const countWrong = book.reviews.librarything.reviewsCount || "NOT DATA";
+// countWrong;
+
+// Nullish Coalescing Operator
+// const count = book.reviews.librarything.reviewsCount ?? "no data";
+// count;
+
+// Optional Chaining -> ?
+
+function getTotalReviewCount(book) {
+  const goodread = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  return goodread + librarything;
+}
+
+console.log(getTotalReviewCount(book));
+*/
+
+function getTotalReviewCount(book) {
+  const goodread = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  return goodread + librarything;
+}
+
+// Map method
+const books = getBooks();
+books;
+const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+console.log(x);
+
+const titles = books.map((book) => book.title);
+titles;
+
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewsCount: getTotalReviewCount(book),
+}));
+essentialData;
+
+// Filter method
+const longBooks = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+longBooks;
+
+const adventureBooks = books
+  .filter((books) => books.genres.includes("adventure"))
+  .map((book) => book.title);
+adventureBooks;
+
+// Reduce method
+const pagesAllBooks = books.reduce(
+  (accumulatorOrSum, book) => accumulatorOrSum + book.pages,
+  0
+);
+pagesAllBooks;
